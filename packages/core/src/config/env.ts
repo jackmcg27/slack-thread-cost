@@ -22,8 +22,6 @@ const envSchema = z.object({
   DENODO_TIMEOUT_MS: z.coerce.number().int().positive().default(5000),
 
   TRACKED_CHANNELS: z.string().optional(),
-
-  DASHBOARD_PORT: z.coerce.number().int().positive().default(3000),
 });
 
 export type Env = z.infer<typeof envSchema>;

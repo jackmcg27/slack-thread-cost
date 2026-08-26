@@ -8,6 +8,10 @@ Runs entirely on-prem / on a local machine or VM. The only outbound
 network dependency is Slack's own API (Socket Mode) — no cloud hosting,
 no external services, no data leaves your network except to Slack itself.
 
+For a beginner-friendly, step-by-step deployment walkthrough (Ubuntu
+VM), see [DEPLOYMENT.md](DEPLOYMENT.md). This README covers the same
+ground more tersely and is OS-agnostic.
+
 ## How it works
 
 1. A Slack bot (`packages/bot`) listens for messages in real time via
@@ -119,8 +123,8 @@ npm run dev:bot         # start ingestion (separate terminal)
 npm run dev:dashboard   # start the dashboard (separate terminal)
 ```
 
-Dashboard defaults to `http://localhost:3311` (see `DASHBOARD_PORT` in
-`.env`).
+Dashboard runs on `http://localhost:3311` (fixed in
+`packages/dashboard/package.json`).
 
 ### Windows note: SQLite path
 
@@ -169,8 +173,7 @@ migration is config-only.
 ## Environment variables
 
 See `.env.example` for the full list with inline comments, including
-`CLASSIFICATION_PROVIDER`, `DENODO_*`, `TRACKED_CHANNELS`, and
-`DASHBOARD_PORT`.
+`CLASSIFICATION_PROVIDER`, `DENODO_*`, and `TRACKED_CHANNELS`.
 
 ## Known limitations (v1)
 
