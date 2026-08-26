@@ -1,4 +1,5 @@
 export { prisma } from './db/client';
+export { Prisma } from '@prisma/client';
 export { loadEnv } from './config/env';
 export type { Env } from './config/env';
 
@@ -22,3 +23,5 @@ export type {
 } from './costCalc/types';
 
 export { default as timeEstimateConfig } from './config/time-estimate.config.json';
+
+export type { SlackMessageEvent } from './types/slack';
