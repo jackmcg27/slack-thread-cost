@@ -1,0 +1,17 @@
+# Optional: local Postgres for prod-like testing. Not needed for dev
+# (SQLite is the default). See README "Moving to Postgres".
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: slack_thread_cost
+      POSTGRES_PASSWORD: slack_thread_cost
+      POSTGRES_DB: slack_thread_cost
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
