@@ -34,6 +34,9 @@ echo "Node.js $(node --version) OK"
 echo "== Installing dependencies (npm install) =="
 npm install
 
+echo "== Generating Prisma client =="
+npm run prisma:generate --workspace=packages/core
+
 echo "== Configuring .env =="
 ENV_PATH="$REPO_ROOT/.env"
 TOKENS_STILL_NEEDED=0
