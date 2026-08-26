@@ -72,9 +72,12 @@ npm run prisma:seed
 ```
 
 This creates the SQLite DB and seeds the 5 staff classifications with
-placeholder hourly rates. Edit `packages/core/prisma/seed.ts` with your
-real classification names and rates from your company's cost-estimator
-methodology, then re-run `npm run prisma:seed`.
+placeholder hourly rates. Edit
+`packages/core/src/config/rates.config.json` with your real
+classification names and rates from your company's cost-estimator
+methodology, then re-run `npm run prisma:seed`. Re-running after a
+rate change closes out the old `RateHistory` row and opens a new one,
+so costs already computed under the old rate stay accurate.
 
 ### 4. Create the Slack app
 

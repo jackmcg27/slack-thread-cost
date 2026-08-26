@@ -95,7 +95,8 @@ npm run prisma:seed
 
 This inserts placeholder rates ($30/40/55/75/100 per hour). To use
 your company's real numbers, edit
-`packages/core/prisma/seed.ts`, then re-run `npm run prisma:seed`.
+`packages/core/src/config/rates.config.json`, then re-run
+`npm run prisma:seed`.
 
 ---
 

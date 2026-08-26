@@ -61,7 +61,7 @@ npm run prisma:seed
 echo
 echo "== Setup complete =="
 echo "Next steps:"
-echo "  1. Edit packages/core/prisma/seed.ts with real hourly rates, then: npm run prisma:seed"
+echo "  1. Edit packages/core/src/config/rates.config.json with real hourly rates, then: npm run prisma:seed"
 if [ "$TOKENS_STILL_NEEDED" -eq 1 ]; then
   echo "  2. Create the Slack app and add SLACK_BOT_TOKEN / SLACK_APP_TOKEN to .env"
   echo "     (see README.md, section 'Create the Slack app')"
