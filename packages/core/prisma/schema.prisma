@@ -1,0 +1,112 @@
+// Money is stored as integer cents and classification codes as plain
+// strings (not native enums) so this schema works unmodified against
+// both SQLite (dev) and Postgres (prod) — swapping `provider` +
+// DATABASE_URL is the entire migration.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Workspace {
+  id          String    @id @default(cuid())
+  slackTeamId String    @unique
+  name        String
+  channels    Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Channel {
+  id             String    @id @default(cuid())
+  slackChannelId String    @unique
+  name           String
+  isPrivate      Boolean   @default(false)
+  isTracked      Boolean   @default(true)
+  workspaceId    String
+  workspace      Workspace @relation(fields: [workspaceId], references: [id])
+  messages       Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workspaceId])
+}
+
+model Classification {
+  id          String        @id @default(cuid())
+  code        String        @unique
+  label       String
+  description String?
+  sortOrder   Int           @default(0)
+  users       User[]
+  rateHistory RateHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Rates are never edited in place — a rate change inserts a new row and
+// closes out the previous one (sets effectiveTo). This keeps historical
+// thread costs accurate to whatever rate was active when a message was
+// actually sent.
+model RateHistory {
+  id               String          @id @default(cuid())
+  classificationId String
+  classification   Classification  @relation(fields: [classificationId], references: [id])
+  hourlyRateCents  Int
+  effectiveFrom    DateTime        @default(now())
+  effectiveTo      DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([classificationId, effectiveFrom])
+}
+
+model User {
+  id                 String          @id @default(cuid())
+  slackUserId        String          @unique
+  displayName        String
+  realName           String?
+  email              String?
+  classificationId   String?
+  classification     Classification? @relation(fields: [classificationId], references: [id])
+  // How the classification was resolved: "manual" | "denodo" | "workday" | null (unmapped)
+  classificationSource String?
+  lastSyncedAt       DateTime?
+  messages           Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classificationId])
+}
+
+// One row per Slack message. Deliberately no message text column — only
+// the metadata needed to estimate time/cost is stored (see README
+// Privacy section). "Thread" is not a stored entity: a thread is the
+// set of Message rows sharing (channelId, threadTs ?? slackTs),
+// computed at query time.
+model Message {
+  id            String   @id @default(cuid())
+  slackTs       String
+  channelId     String
+  channel       Channel  @relation(fields: [channelId], references: [id])
+  threadTs      String?
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  wordCount     Int
+  charCount     Int
+  timestampMs   BigInt
+  isThreadRoot  Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@unique([channelId, slackTs])
+  @@index([channelId, threadTs])
+  @@index([userId, timestampMs])
+}

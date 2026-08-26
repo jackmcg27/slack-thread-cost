@@ -1,0 +1,6 @@
+{
+  "baseOverheadMinutes": 1.5,
+  "wordsPerMinuteComposing": 40,
+  "minMessageMinutes": 0.5,
+  "maxMessageMinutes": 15
+}

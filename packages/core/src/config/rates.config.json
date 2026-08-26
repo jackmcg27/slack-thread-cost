@@ -1,0 +1,40 @@
+{
+  "_comment": "Placeholder classifications and rates. Replace label/description/hourlyRateCents with real values from the existing cost-estimator methodology, then re-run `npm run prisma:seed`.",
+  "classifications": [
+    {
+      "code": "L1",
+      "label": "Classification 1",
+      "description": "Placeholder — replace with real staff classification",
+      "sortOrder": 1,
+      "hourlyRateCents": 3000
+    },
+    {
+      "code": "L2",
+      "label": "Classification 2",
+      "description": "Placeholder — replace with real staff classification",
+      "sortOrder": 2,
+      "hourlyRateCents": 4000
+    },
+    {
+      "code": "L3",
+      "label": "Classification 3",
+      "description": "Placeholder — replace with real staff classification",
+      "sortOrder": 3,
+      "hourlyRateCents": 5500
+    },
+    {
+      "code": "L4",
+      "label": "Classification 4",
+      "description": "Placeholder — replace with real staff classification",
+      "sortOrder": 4,
+      "hourlyRateCents": 7500
+    },
+    {
+      "code": "L5",
+      "label": "Classification 5",
+      "description": "Placeholder — replace with real staff classification",
+      "sortOrder": 5,
+      "hourlyRateCents": 10000
+    }
+  ]
+}
